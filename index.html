@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>9 Months of Us ❤️</title>
+    <style>
+        body {
+            background-color: #ffe6f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 20px;
+            color: #b30059;
+        }
+        img.main-photo {
+            max-width: 300px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px #ffb6c1;
+        }
+        p {
+            font-size: 1.3rem;
+            margin: 20px auto;
+            max-width: 500px;
+            line-height: 1.5;
+        }
+        audio {
+            margin-top: 20px;
+            outline: none;
+        }
+
+        /* Sliding card container */
+        .slider-container {
+            position: relative;
+            max-width: 320px;
+            margin: 30px auto 10px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #ffb6c1;
+            background: white;
+        }
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slide-card {
+            min-width: 300px;
+            margin: 10px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px #ffb6c1;
+            user-select: none;
+        }
+        .slide-card img {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        /* Navigation buttons */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #ffb6c1;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            color: #b30059;
+            font-weight: bold;
+            font-size: 18px;
+            opacity: 0.8;
+            user-select: none;
+            transition: opacity 0.3s;
+        }
+        .nav-btn:hover {
+            opacity: 1;
+        }
+        .nav-prev {
+            left: 5px;
+        }
+        .nav-next {
+            right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>9 Beautiful Months Together ❤️</h1>
+
+    <!-- Static main photo -->
+    <img class="main-photo" src="special1/couple.jpg" alt="Couple Photo" />
+
+    <!-- Text paragraph -->
+    <p>
+        Tonight marks 9 beautiful months of us — 9 months of holding your hand through laughter, love, and everything in between. Every moment with you has been a soft, sweet chapter in the most beautiful story I’ve ever known. You’re not just part of my life — you are my favorite part.
+    </p>
+
+    <!-- Audio player above sliding photos -->
+    <audio controls autoplay loop>
+        <source src="special1/love_song.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Sliding Card Carousel below the audio -->
+    <div class="slider-container" aria-label="Photo carousel">
+        <button class="nav-btn nav-prev" aria-label="Previous photo">&lt;</button>
+        <div class="slider-wrapper">
+            <div class="slide-card"><img src="special1/photo1.jpg" alt="Memory 1" /></div>
+            <div class="slide-card"><img src="special1/photo2.jpg" alt="Memory 2" /></div>
+            <div class="slide-card"><img src="special1/photo3.jpg" alt="Memory 3" /></div>
+            <div class="slide-card"><img src="special1/photo4.jpg" alt="Memory 4" /></div>
+            <div class="slide-card"><img src="special1/photo5.jpg" alt="Memory 5" /></div>
+            <div class="slide-card"><img src="special1/photo6.jpg" alt="Memory 6" /></div>
+            <div class="slide-card"><img src="special1/photo7.jpg" alt="Memory 7" /></div>
+            <div class="slide-card"><img src="special1/photo8.jpg" alt="Memory 8" /></div>
+            <div class="slide-card"><img src="special1/photo9.jpg" alt="Memory 9" /></div>
+            <div class="slide-card"><img src="special1/photo10.jpg" alt="Memory 10" /></div>
+        </div>
+        <button class="nav-btn nav-next" aria-label="Next photo">&gt;</button>
+    </div>
+
+    <script>
+        const sliderWrapper = document.querySelector('.slider-wrapper');
+        const slides = document.querySelectorAll('.slide-card');
+        const prevBtn = document.querySelector('.nav-prev');
+        const nextBtn = document.querySelector('.nav-next');
+
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        const slideWidth = slides[0].offsetWidth + 20; // card width + margin
+
+        function updateSliderPosition() {
+            sliderWrapper.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateSliderPosition();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateSliderPosition();
+        });
+
+        // Optional: Enable swipe support for touch devices
+        let startX = 0;
+        let isDragging = false;
+
+        sliderWrapper.addEventListener('touchstart', e => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
+
+        sliderWrapper.addEventListener('touchmove', e => {
+            if (!isDragging) return;
+            const currentX = e.touches[0].clientX;
+            const diffX = currentX - startX;
+            sliderWrapper.style.transform = `translateX(${ -currentIndex * slideWidth + diffX }px)`;
+        });
+
+        sliderWrapper.addEventListener('touchend', e => {
+            isDragging = false;
+            const endX = e.changedTouches[0].clientX;
+            const diffX = endX - startX;
+
+            if (diffX > 50) {
+                // Swipe right
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            } else if (diffX < -50) {
+                // Swipe left
+                currentIndex = (currentIndex + 1) % totalSlides;
+            }
+            updateSliderPosition();
+        });
+    </script>
+</body>
+</html>
